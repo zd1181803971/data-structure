@@ -35,12 +35,22 @@ public class SingleLinkedListDemo {
         HeroNode head = singleLinkedList.getHead();
 //        convertNode(head);
 //        singleLinkedList.show();
-        System.out.println("2222222头插");
-        convertNodeByHead(head);
-        singleLinkedList.show();
+//        System.out.println("2222222头插");
+//        convertNodeByHead(head);
+//        singleLinkedList.show();
+        System.out.println("逆序打印");
+        showNode(head.next);
 
 
 
+    }
+
+    public static void showNode(HeroNode node) {
+        if (node == null) {
+            return;
+        }
+        showNode(node.next);
+        System.out.println(node);
     }
 
     /**
