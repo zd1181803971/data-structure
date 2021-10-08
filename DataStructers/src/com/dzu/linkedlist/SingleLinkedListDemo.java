@@ -55,6 +55,8 @@ public class SingleLinkedListDemo {
 
     /**
      * 单链表转换：头插法
+     * 1->2->3
+     * 3->2->1
      * @param heroNode
      */
     public static void convertNodeByHead(HeroNode heroNode) {
@@ -99,13 +101,6 @@ public class SingleLinkedListDemo {
             end = end.next;
         }
         heroNode.next = mid;
-//        while (true) {
-//            if (mid == null) {
-//                break;
-//            }
-//            System.out.println(mid);
-//            mid = mid.next;
-//        }
     }
 
     /**
