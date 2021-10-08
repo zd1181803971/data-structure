@@ -10,30 +10,49 @@ public class Josepfu {
     public static void main(String[] args) {
         CircleSingleLinkedList list = new CircleSingleLinkedList();
         Boy build = list.build(3);
-        System.out.println(build);
+        list.showBoy();
     }
 }
 
 class CircleSingleLinkedList {
-    private Boy first = new Boy(1);
+    private Boy first = null;
 
     public Boy build(int nums) {
         if (nums < 1) {
             System.out.println("nonono");
             return null;
         }
-        if (nums == 1) {
-            first.setNext(first);
-            return first;
-        }
-        Boy temp = first;
-        for (int i = 2; i <= nums; i++) {
+
+        Boy temp = null;
+        for (int i = 1; i <= nums; i++) {
             Boy boy = new Boy(i);
-            boy.setNext(first);
-            temp.setNext(boy);
-            temp = boy;
+            if (i == 1) {
+                first = boy;
+                first.setNext(boy);
+                temp = first;
+            }else {
+                temp.setNext(boy);
+                boy.setNext(first);
+//                temp = temp.getNext();
+                temp = boy;
+            }
         }
         return first;
+    }
+
+    public void showBoy() {
+        if (first == null) {
+            System.out.println("null");
+            return;
+        }
+        Boy temp = first;
+        while (true) {
+            System.out.println(temp.getNo());
+            temp = temp.getNext();
+            if (temp == first) {
+                break;
+            }
+        }
     }
 }
 
