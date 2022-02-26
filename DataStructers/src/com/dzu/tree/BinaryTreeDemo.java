@@ -16,12 +16,12 @@ public class BinaryTreeDemo {
         HeroNode hd2 = new HeroNode("3", "xx");
         HeroNode hd3 = new HeroNode("4", "ff");
         HeroNode hd4 = new HeroNode("5", "gg");
-        HeroNode hd5 = new HeroNode("6", "mm");
+        HeroNode hd5 = new HeroNode("4", "mm");
 
         /**
-         *       root
-         *    hd1    hd2
-         *  hd3    hd4  hd5
+         *       root                 1
+         *    hd1    hd2         2       3
+         *  hd3    hd4  hd5   4        5    6
          */
         root.setLeft(hd1);
         root.setRight(hd2);
@@ -30,10 +30,17 @@ public class BinaryTreeDemo {
         hd2.setRight(hd5);
         binaryTree.setHeroNode(root);
 
+        // 测试遍历
 //        binaryTree.per();124356
 //        binaryTree.cent(); 421536
         // 425631
-        binaryTree.post();
+//        binaryTree.post();
+        // 测试查找
+//        HeroNode heroNode = binaryTree.perSearch("3");
+//        System.out.println(heroNode);
+        // 测试删除
+        binaryTree.del("4");
+        binaryTree.per();
 
     }
 }
@@ -43,6 +50,20 @@ class BinaryTree {
 
     public void setHeroNode(HeroNode heroNode) {
         this.heroNode = heroNode;
+    }
+
+    public void del(String id) {
+        if (heroNode != null) {
+            if (heroNode.getId().equals(id)) {
+                heroNode = null;
+            } else {
+                heroNode.delNode(id);
+            }
+        }
+    }
+
+    public HeroNode perSearch(String id) {
+        return heroNode.perSearch(id);
     }
 
     public void per() {
@@ -64,7 +85,11 @@ class BinaryTree {
     }
 }
 
-
+/**
+ * 树节点
+ * id name 节点数据
+ * left、right  指针，分别指向左节点和右节点
+ */
 class HeroNode {
 
     private String id;
@@ -80,6 +105,29 @@ class HeroNode {
         this.name = name;
     }
 
+
+    /**
+     * 删除节点
+     * @param id
+     */
+    public void delNode(String id) {
+        if (this.left != null) {
+            if (this.left.id.equals(id)) {
+                this.left = null;
+                return;
+            } else {
+                this.left.delNode(id);
+            }
+        }
+        //TODO 节点在左子树删了，就不要遍历右子树了。return true 或者 false
+        if (this.right != null) {
+            if (this.right.id.equals(id)) {
+                this.right = null;
+            } else {
+                this.right.delNode(id);
+            }
+        }
+    }
     /**
      * 前序遍历搜索
      * @param id
@@ -122,6 +170,31 @@ class HeroNode {
             heroNode = this.right.indexSearch(id);
         }
         return heroNode;
+    }
+
+    /**
+     * 后序遍历搜索
+     * @param id
+     * @return
+     */
+    public HeroNode postSearch(String id) {
+        HeroNode heroNode = null;
+        if (this.left != null) {
+            heroNode = this.left.postSearch(id);
+        }
+        if (heroNode != null) {
+            return heroNode;
+        }
+        if (this.right != null) {
+            heroNode = this.right.postSearch(id);
+        }
+        if (heroNode != null) {
+            return heroNode;
+        }
+        if (this.id.equals(id)) {
+            return this;
+        }
+        return null;
     }
 
     /**
