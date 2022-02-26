@@ -11,12 +11,12 @@ public class BinaryTreeDemo {
 
         BinaryTree binaryTree = new BinaryTree();
 
-        HeroNode root = new HeroNode("1","zd");
-        HeroNode hd1 = new HeroNode("2","dd");
-        HeroNode hd2 = new HeroNode("3","xx");
-        HeroNode hd3 = new HeroNode("4","ff");
-        HeroNode hd4 = new HeroNode("5","gg");
-        HeroNode hd5 = new HeroNode("6","mm");
+        HeroNode root = new HeroNode("1", "zd");
+        HeroNode hd1 = new HeroNode("2", "dd");
+        HeroNode hd2 = new HeroNode("3", "xx");
+        HeroNode hd3 = new HeroNode("4", "ff");
+        HeroNode hd4 = new HeroNode("5", "gg");
+        HeroNode hd5 = new HeroNode("6", "mm");
 
         /**
          *       root
@@ -50,6 +50,7 @@ class BinaryTree {
             heroNode.perOrder();
         }
     }
+
     public void cent() {
         if (heroNode != null) {
             heroNode.centOrder();
@@ -77,6 +78,50 @@ class HeroNode {
         super();
         this.id = id;
         this.name = name;
+    }
+
+    /**
+     * 前序遍历搜索
+     * @param id
+     * @return
+     */
+    public HeroNode perSearch(String id) {
+        if (this.id.equals(id)) {
+            return this;
+        }
+        HeroNode heroNode = null;
+        if (this.left != null) {
+            heroNode = this.left.perSearch(id);
+            if (heroNode != null) {
+                return heroNode;
+            }
+        }
+        if (this.right != null) {
+            heroNode = this.right.perSearch(id);
+        }
+        return heroNode;
+    }
+
+    /**
+     * 中序遍历搜索
+     * @param id
+     * @return
+     */
+    public HeroNode indexSearch(String id) {
+        HeroNode heroNode = null;
+        if (this.left != null) {
+            heroNode= this.left.indexSearch(id);
+            if (heroNode != null) {
+                return heroNode;
+            }
+        }
+        if (this.id.equals(id)) {
+            return this;
+        }
+        if (this.right != null) {
+            heroNode = this.right.indexSearch(id);
+        }
+        return heroNode;
     }
 
     /**
@@ -132,11 +177,6 @@ class HeroNode {
         // 父节点
         System.out.println(this);
     }
-
-
-
-
-
 
 
     @Override
