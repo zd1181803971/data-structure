@@ -10,7 +10,10 @@ package com.dzu.sort;
 public class BubbleSort {
     public static void main(String[] args) {
         int[] arr = {6, 2, 3, 9, 4, 1};
+        BubbleSort.bubbleSort(arr);
+    }
 
+    public static void bubbleSort(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             boolean flog = true;
             for (int j = 0; j < arr.length - 1 - i; j++) {
@@ -25,9 +28,6 @@ public class BubbleSort {
             if (flog) {
                 break;
             }
-        }
-        for (int i : arr) {
-            System.out.println(i);
         }
     }
 }
