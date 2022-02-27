@@ -8,9 +8,10 @@ package com.dzu.sort;
  */
 public class SelectSort {
     public static void main(String[] args) {
-
         int[] arr = {7, 2, 5, 3, 1, 10, 9};
-
+        selectSort(arr);
+    }
+    public static void selectSort(int[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
             int index = i;
             int min = arr[i];
@@ -25,12 +26,6 @@ public class SelectSort {
                 arr[index] = arr[i];
                 arr[i] = min;
             }
-        }
-
-        System.out.println(arr.length);
-        for (int i = 0; i < arr.length; i++) {
-
-            System.out.printf(arr[i] + " ");
         }
     }
 }
