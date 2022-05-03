@@ -18,7 +18,7 @@ public class BinarySortTreeDemo {
         System.out.println("binarySortTree.searchNode(1) = " + binarySortTree.searchNode(1));
         System.out.println("binarySortTree.searchNode(1) = " + binarySortTree.searchNodeParent(1));
 
-        binarySortTree.delNode(2);
+        binarySortTree.delNode(1);
         binarySortTree.indexSearch();
 
     }
@@ -49,6 +49,31 @@ class BinarySortTree {
             }
             if (parentNode.right != null && parentNode.right.id == id) {
                 parentNode.right = null;
+                return;
+            }
+        }
+
+        // 判断要删除的节点是否有一颗子树
+        if ((node.left != null && node.right == null) || (node.left == null && node.right != null)) {
+            if (node.left != null) {
+                if (parentNode.left != null && parentNode.left.id == id) {
+                    parentNode.left = node.left;
+                    return;
+                }
+                if (parentNode.right != null && parentNode.right.id == id) {
+                    parentNode.right = node.left;
+                    return;
+                }
+            }
+            if (node.right != null) {
+                if (parentNode.right != null && parentNode.right.id == id) {
+                    parentNode.right = node.right;
+                    return;
+                }
+                if (parentNode.left != null && parentNode.left.id == id) {
+                    parentNode.left = node.right;
+                    return;
+                }
             }
         }
 
