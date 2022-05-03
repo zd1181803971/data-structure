@@ -18,7 +18,7 @@ public class BinarySortTreeDemo {
         System.out.println("binarySortTree.searchNode(1) = " + binarySortTree.searchNode(1));
         System.out.println("binarySortTree.searchNode(1) = " + binarySortTree.searchNodeParent(1));
 
-        binarySortTree.delNode(1);
+        binarySortTree.delNode(7);
         binarySortTree.indexSearch();
 
     }
@@ -28,6 +28,12 @@ class BinarySortTree {
     private Node root;
 
 
+    /**
+     * 删除节点
+     * 三种情况
+     *
+     * @param id
+     */
     public void delNode(int id) {
         if (root == null) {
             return;
@@ -36,12 +42,15 @@ class BinarySortTree {
         if (node == null) {
             return;
         }
-        Node parentNode = searchNodeParent(id);
-        if (parentNode == null) {
+
+        if (root.left == null && root.right == null) {
             root = null;
             return;
         }
-        // 判断要删除的节点是否是叶子节点
+
+        Node parentNode = searchNodeParent(id);
+
+        // 1、判断要删除的节点是否是叶子节点
         if (node.left == null && node.right == null) {
             if (parentNode.left != null && parentNode.left.id == id) {
                 parentNode.left = null;
@@ -53,8 +62,16 @@ class BinarySortTree {
             }
         }
 
-        // 判断要删除的节点是否有一颗子树
+        // 2、判断要删除的节点是否有一颗子树
         if ((node.left != null && node.right == null) || (node.left == null && node.right != null)) {
+            if (parentNode == null) {
+                if (node.left != null) {
+                    root = node.left;
+                    return;
+                }
+                root = node.right;
+                return;
+            }
             if (node.left != null) {
                 if (parentNode.left != null && parentNode.left.id == id) {
                     parentNode.left = node.left;
@@ -77,6 +94,30 @@ class BinarySortTree {
             }
         }
 
+        // 3、删除有两颗子树的节点
+        if (node.right != null && node.left != null) {
+            // 通过右子树，就找最小值，若是通过左子树，则找最大值，然后与要删除的节点交换
+            node.id = delRightTreeMin(node.right);
+        }
+
+    }
+
+    /**
+     * 1、找出最小节点的值
+     * 2、删除最小节点（删除最小节点时，只满足两种情况，最小节点是叶子节点，或者有右子树）
+     *
+     * @param node
+     * @return
+     */
+    public int delRightTreeMin(Node node) {
+        Node temp = node;
+
+        // 通过循环找出最小的节点（最左边的节点是最小的
+        while (temp.left != null) {
+            temp = temp.left;
+        }
+        delNode(temp.id);
+        return temp.id;
     }
 
     public Node searchNode(int id) {
