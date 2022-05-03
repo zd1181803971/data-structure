@@ -1,5 +1,6 @@
 package com.dzu.tree;
 
+
 /**
  * @author ZhaoDong
  * @date 2022/5/1 19:53
@@ -7,25 +8,65 @@ package com.dzu.tree;
  */
 public class BinarySortTreeDemo {
     public static void main(String[] args) {
-        int[] arr = {7, 3, 10, 12, 5, 1, 9, 6, 11, 22, 40, 31, 29, 24, 2, 8};
+//        int[] arr = {7, 3, 10, 12, 5, 1, 9, 6, 11, 22, 40, 31, 29, 24, 2, 8};
+        int[] arr = {7, 3, 10, 12, 5, 1, 9, 2};
         BinarySortTree binarySortTree = new BinarySortTree();
         for (int i : arr) {
             binarySortTree.add(new Node(i));
         }
+//        binarySortTree.indexSearch();
+        System.out.println("binarySortTree.searchNode(1) = " + binarySortTree.searchNode(1));
+        System.out.println("binarySortTree.searchNode(1) = " + binarySortTree.searchNodeParent(1));
+
+        binarySortTree.delNode(2);
         binarySortTree.indexSearch();
-        System.out.println("binarySortTree.searchNode(1) = " + binarySortTree.searchNode(10));
-        System.out.println("binarySortTree.searchNode(1) = " + binarySortTree.searchNodeParent(12));
+
     }
 }
 
 class BinarySortTree {
     private Node root;
 
+
+    public void delNode(int id) {
+        if (root == null) {
+            return;
+        }
+        Node node = searchNode(id);
+        if (node == null) {
+            return;
+        }
+        Node parentNode = searchNodeParent(id);
+        if (parentNode == null) {
+            root = null;
+            return;
+        }
+        // 判断要删除的节点是否是叶子节点
+        if (node.left == null && node.right == null) {
+            if (parentNode.left != null && parentNode.left.id == id) {
+                parentNode.left = null;
+                return;
+            }
+            if (parentNode.right != null && parentNode.right.id == id) {
+                parentNode.right = null;
+            }
+        }
+
+    }
+
     public Node searchNode(int id) {
+        if (root == null) {
+            return null;
+        }
+
         return root.searchNode(id);
     }
 
     public Node searchNodeParent(int id) {
+        if (root == null) {
+            return null;
+        }
+
         return root.searchNodeParent(id);
     }
 
