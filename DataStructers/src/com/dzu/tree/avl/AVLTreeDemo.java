@@ -12,6 +12,7 @@ public class AVLTreeDemo {
         for (int i = 0; i < arr.length; i++) {
             avlTree.add(new Node(arr[i]));
         }
+        avlTree.indexSearch();
         System.out.println("avlTree.height() = " + avlTree.height());
         System.out.println("avlTree.root.leftHeight() = " + avlTree.root.leftHeight());
         System.out.println("avlTree.root.rightHeight() = " + avlTree.root.rightHeight());
@@ -164,6 +165,23 @@ class Node {
         this.id = id;
     }
 
+    /**
+     * 左旋方法
+     */
+    public void leftRotate() {
+        // 创建新的节点，以当前根节点
+        Node newNode = new Node(this.id);
+        // 新的节点的左子树指向根节点左子树
+        newNode.left = this.left;
+        // 新的节点的右子树指向根节点的右子树的左子树
+        newNode.right = this.right.left;
+        // 将根节点的值改为 右节点的值
+        this.id = this.right.id;
+        // 根节点的右子树指向 根节点右子树的右子树
+        this.right = this.right.right;
+        // 根节点的左子树指向新节点
+        this.left = newNode;
+    }
     public int leftHeight() {
         if (this.left == null) {
             return 0;
@@ -238,6 +256,12 @@ class Node {
             } else {
                 this.right.add(node);
             }
+        }
+
+        // 判断是否还满足avl树
+        // 右子树的高度大于左子树，左旋
+        if (this.rightHeight() - this.leftHeight() > 1) {
+            this.leftRotate();
         }
     }
 
