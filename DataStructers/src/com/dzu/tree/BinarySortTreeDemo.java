@@ -116,6 +116,7 @@ class BinarySortTree {
         while (temp.left != null) {
             temp = temp.left;
         }
+        // 此次删除只有两种情况，要么最小的节点没有右子树，要么只有右子树
         delNode(temp.id);
         return temp.id;
     }
