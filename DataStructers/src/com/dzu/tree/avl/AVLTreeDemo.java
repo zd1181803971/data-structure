@@ -7,7 +7,8 @@ package com.dzu.tree.avl;
  */
 public class AVLTreeDemo {
     public static void main(String[] args) {
-        int[] arr = {4, 3, 6, 5, 7, 8};
+//        int[] arr = {4, 3, 6, 5, 7, 8};
+        int[] arr = {10, 12, 8, 9, 7, 6};
         AVLTree avlTree = new AVLTree();
         for (int i = 0; i < arr.length; i++) {
             avlTree.add(new Node(arr[i]));
@@ -182,6 +183,20 @@ class Node {
         // 根节点的左子树指向新节点
         this.left = newNode;
     }
+
+    /**
+     * 右旋方法
+     */
+    public void rightRotate() {
+        Node newNode = new Node(this.id);
+        newNode.right = this.right;
+        newNode.left = this.left.right;
+
+        this.id = this.left.id;
+        this.left = this.left.left;
+        this.right = newNode;
+
+    }
     public int leftHeight() {
         if (this.left == null) {
             return 0;
@@ -262,6 +277,10 @@ class Node {
         // 右子树的高度大于左子树，左旋
         if (this.rightHeight() - this.leftHeight() > 1) {
             this.leftRotate();
+        }
+        // 右旋
+        if (this.leftHeight() - this.rightHeight() > 1) {
+            this.rightRotate();
         }
     }
 
