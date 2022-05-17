@@ -28,6 +28,7 @@ public class ShellSort {
             for (int i = step; i < arr.length ; i++) {
                 //定义变量保存当前要比较的数值及其对应的索引
                 int j = i;
+                // 位移法是将小的数字提取出临时变量来，把大的数字依次往后移动，就是覆盖。通过对比前面的数子，找到最前面的位置后，再将小的数字赋值到最前面的位置，
                 int tmp = arr[j];
                 //如果当前数字小于前边一组对应的数字，则移位
                 if (arr[j - step] > arr[j]) {
@@ -59,6 +60,7 @@ public class ShellSort {
                 // 遍历各个组的所有元素、、 共(group组，每组（length/group)个元素），步长 group
                 for (int j = i - group; j >= 0; j -= group) {
                     // 交换法 (比较笨,慢
+                    // 每次进行比较，交换比自己大的数字。最终找不到比自己大的，就结束
                     if (arr[j] > arr[j + group]) {
                         int temp = arr[j];
                         arr[j] = arr[j + group];
