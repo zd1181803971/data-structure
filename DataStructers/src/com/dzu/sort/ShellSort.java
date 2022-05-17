@@ -1,5 +1,7 @@
 package com.dzu.sort;
 
+import java.util.Arrays;
+
 /**
  * @author ZhaoDong
  * @date 2022/2/26 17:06
@@ -10,25 +12,36 @@ public class ShellSort {
     public static void main(String[] args) {
 
         int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0};
-        shellSort(arr);
+        shellSort2(arr);
+        System.out.println(Arrays.toString(arr));
+
     }
 
     /**
-     * 移位法  很快
-     * @param arr
+     * 希尔排序之 移位法
+     * @param arr 要排序的数组
      */
-    public static void shellSort2(int[] arr) {
-        for (int group = arr.length / 2; group > 0; group /= 2) {
-            for (int i = group; i < arr.length; i++) {
-                int index = i;
-                int insertValue = arr[index];
-                while (index - group >= 0 && insertValue > arr[index - group]) {
-                    arr[index - group] = arr[index];
-                    index -= group;
+    public static void shellSort2(int[] arr){
+        //变量step为增量，并不断的缩小增量,直到缩小到1为止
+        for (int step = arr.length / 2; step > 0; step /= 2) {
+            //对每次缩小的增量按照大小进行移位
+            for (int i = step; i < arr.length ; i++) {
+                //定义变量保存当前要比较的数值及其对应的索引
+                int j = i;
+                int tmp = arr[j];
+                //如果当前数字小于前边一组对应的数字，则移位
+                if (arr[j - step] > arr[j]) {
+                    //循环寻找当前元素要插入的位置
+                    while ((j - step) >= 0 && arr[j - step] > tmp) {
+                        arr[j] = arr[j - step];
+                        j -= step;
+                    }
+                    //则循环结束后找到要插入的位置
+                    arr[j] = tmp;
                 }
-                arr[index] = insertValue;
             }
         }
+
     }
 
 
