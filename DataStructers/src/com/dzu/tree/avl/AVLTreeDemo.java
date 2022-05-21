@@ -8,7 +8,8 @@ package com.dzu.tree.avl;
 public class AVLTreeDemo {
     public static void main(String[] args) {
 //        int[] arr = {4, 3, 6, 5, 7, 8};
-        int[] arr = {10, 12, 8, 9, 7, 6};
+//        int[] arr = {10, 12, 8, 9, 7, 6};
+        int[] arr = {10, 11, 7, 6, 8, 9};
         AVLTree avlTree = new AVLTree();
         for (int i = 0; i < arr.length; i++) {
             avlTree.add(new Node(arr[i]));
@@ -17,6 +18,7 @@ public class AVLTreeDemo {
         System.out.println("avlTree.height() = " + avlTree.height());
         System.out.println("avlTree.root.leftHeight() = " + avlTree.root.leftHeight());
         System.out.println("avlTree.root.rightHeight() = " + avlTree.root.rightHeight());
+        System.out.println("根节点的左子节点：" + avlTree.root.left);
     }
 }
 class AVLTree {
@@ -276,12 +278,18 @@ class Node {
         // 判断是否还满足avl树
         // 右子树的高度大于左子树，左旋
         if (this.rightHeight() - this.leftHeight() > 1) {
+            if (this.right != null && this.right.leftHeight() > this.leftHeight()) {
+                this.right.rightRotate();
+            }
             this.leftRotate();
-        }
-        // 右旋
-        if (this.leftHeight() - this.rightHeight() > 1) {
-            this.rightRotate();
-        }
+        } else
+            // 右旋
+            if (this.leftHeight() - this.rightHeight() > 1) {
+                if (this.left != null && this.left.rightHeight() > this.rightHeight()) {
+                    this.left.leftRotate();
+                }
+                this.rightRotate();
+            }
     }
 
     /**
